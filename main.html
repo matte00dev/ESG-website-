@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<!--
+  Pagina web di analisi del Report di Sostenibilità della Cantina Castello di Uviglie,azienda del settore primario nel Monferrato
+  Autore: Matteo Lasalvia
+-->
+<html lang="it">
+<head>
+  <!-- 
+    META TAG: charset definisce la codifica UTF-8 per supportare caratteri italiani con accenti.
+	viewport rende la pagina responsive sui dispositivi mobili.
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Analisi del Bilancio di Sostenibilità 2024 del Castello di Uviglie, cantina vitivinicola del Monferrato, Piemonte.">
+  <title>Bilancio di Sostenibilità 2024 — Castello di Uviglie</title>
+
+  <!-- Font di Google Fonts con il preconnect: Cormorant Garamond titoli e DM Sans per il corpo del testo -->
+		
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Colori, font e dimensioni in tutto il foglio. */
+    :root {
+      --blu-primario: #1a5296;
+      --blu-scuro: #0e3a6e;
+      --blu-chiaro: #e8f0fa;
+      --blu-hover: #1565c0;
+      --oro: #c8a45a;
+      --oro-chiaro: #f5ecd7;
+      --bianco: #ffffff;
+      --grigio-chiaro: #f7f8fa;
+      --grigio-medio: #6b7280;
+      --grigio-bordo: #e5e7eb;
+      --testo: #1f2937;
+      --verde-cert: #2d6a2e;
+      --verde-chiaro: #eaf3de;
+      --font-titoli: 'Cormorant Garamond', Georgia, serif;
+      --font-corpo: 'DM Sans', 'Segoe UI', sans-serif;
+      --larghezza-max: 1200px;
+      --raggio-bordo: 12px;
+      --ombra-card: 0 2px 20px rgba(0,0,0,0.06);
+      --transizione: 0.3s ease;
+    }
+
+    /* rimuovo margini/padding di default del browser */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Scroll fluido tra sezioni e body — overflow-x hidden su entrambi per bloccare lo scroll orizzontale su mobile */
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-corpo);
+      color: var(--testo);
+      line-height: 1.7;
+      background: var(--bianco);
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* Barra di navigazione fissa in alto */	   
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 0 2rem;
+      background: rgba(14,58,110,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: var(--transizione);
+    }
+
+    .navbar-content {
+      max-width: var(--larghezza-max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .navbar-logo {
+      font-family: var(--font-titoli);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--bianco);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar-links {
+      display: flex;
+      list-style: none;
+      gap: 1.75rem;
+    }
+
+    .navbar-links a {
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      transition: color var(--transizione);
+      position: relative;
+    }
+
+    /* Linea dorata animata sotto il link */
+    .navbar-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--oro);
+      transition: width var(--transizione);
+    }
+
+    .navbar-links a:hover { color: var(--bianco); }
+    .navbar-links a:hover::after { width: 100%; }
+
+    /* Hamburger menu (visibile solo da mobile) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--bianco);
+      border-radius: 2px;
+      transition: var(--transizione);
+    }
+
+    /* Sezione hero*/
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--blu-scuro);
+	  background-image: url('img/castello1.jpg');
+	  background-size: cover;
+	  background-position: center;
+      overflow: hidden;
+    }
+
+    /* Overlay gradiente sull'immagine di sfondo */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(14,58,110,0.75) 0%,
+        rgba(14,58,110,0.55) 50%,
+        rgba(14,58,110,0.8) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    /* Animazione di entrata dal basso */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-corpo);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--oro);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 1.25rem;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-titoli);
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--bianco);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      animation: fadeInUp 0.8s ease 0.15s forwards;
+      opacity: 0;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--oro);
+      margin: 0 auto 1.5rem;
+      animation: fadeInUp 0.8s ease 0.25s forwards;
+      opacity: 0;
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.85rem 2.25rem;
+      border: 1.5px solid var(--oro);
+      color: var(--oro);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all var(--transizione);
+      animation: fadeInUp 0.8s ease 0.45s forwards;
+      opacity: 0;
+    }
+
+    .hero-cta:hover {
+      background: var(--oro);
+      color: var(--blu-scuro);
+    }
+
+    /* stili comuni alle varie sezioni */
+    .sezione { padding: 5rem 2rem; }
+    .sezione-grigia { background: var(--grigio-chiaro); }
+    .sezione-blu { background: var(--blu-scuro); color: var(--bianco); }
+
+    .container {
+      max-width: var(--larghezza-max);
+      margin: 0 auto;
+    }
+
+    /* Etichetta dorata sopra il titolo di sezione */
+    .sezione-etichetta {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--oro);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 0.75rem;
+    }
+
+    .sezione-titolo {
+      font-family: var(--font-titoli);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--blu-primario);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .sezione-blu .sezione-titolo { color: var(--bianco); }
+
+    /* Linea decorativa dorata */
+    .sezione-linea {
+      width: 50px;
+      height: 2px;
+      background: var(--oro);
+      margin-bottom: 2rem;
+    }
+
+    .sezione-intro {
+      font-size: 1.1rem;
+      color: var(--grigio-medio);
+      max-width: 750px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    .sezione-blu .sezione-intro { color: rgba(255,255,255,0.75); }
+
+    /* CARD */
+    .card {
+      background: var(--bianco);
+      border-radius: var(--raggio-bordo);
+      padding: 2rem;
+      box-shadow: var(--ombra-card);
+      border: 1px solid var(--grigio-bordo);
+      transition: transform var(--transizione), box-shadow var(--transizione);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    /* griglia statistica: auto-fit adatta le colonne alla larghezza disponibile */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bianco);
+      border-radius: var(--raggio-bordo);
+      padding: 1.75rem;
+      text-align: center;
+      box-shadow: var(--ombra-card);
+      border: 1px solid var(--grigio-bordo);
+      transition: transform var(--transizione);
+    }
+
+    .stat-card:hover { transform: translateY(-2px); }
+
+    .stat-numero {
+      font-family: var(--font-titoli);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--blu-primario);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-etichetta {
+      font-size: 0.82rem;
+      color: var(--grigio-medio);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    /* sezione CHI SIAMO — Layout a due colonne  */
+    .chi-siamo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .chi-siamo-testo { font-size: 1rem; line-height: 1.8; color: var(--grigio-medio); }
+    .chi-siamo-testo p { margin-bottom: 1.25rem; }
+
+    /* valore aziendale con icona */
+    .valore-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .valore-icona {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--blu-chiaro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .valore-nome { font-weight: 600; font-size: 0.95rem; color: var(--blu-primario); margin-bottom: 0.15rem; }
+    .valore-desc { font-size: 0.85rem; color: var(--grigio-medio); line-height: 1.6; }
+
+    /* Sezione VINI */
+    .vini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .vini-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px 160px;
+      gap: 0.75rem;
+    }
+
+    .vini-gallery .img-grande { grid-column: 1 / -1; border-radius: var(--raggio-bordo); overflow: hidden; }
+    .vini-gallery .img-piccola { border-radius: var(--raggio-bordo); overflow: hidden; }
+
+    .img-placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: var(--blu-chiaro);
+      transition: transform 0.5s ease;
+    }
+
+    .img-placeholder:hover { transform: scale(1.05); }
+
+    .vini-content { font-size: 0.95rem; color: var(--grigio-medio); line-height: 1.8; }
+    .vini-content p { margin-bottom: 1.25rem; }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .badge-blu { background: var(--blu-chiaro); color: var(--blu-primario); }
+    .badge-verde { background: var(--verde-chiaro); color: var(--verde-cert); }
+    .badge-oro { background: var(--oro-chiaro); color: #8b6914; }
+
+    /* Sezione Ambiente */
+    .ambiente-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .ambiente-card {
+      background: var(--bianco);
+      border-radius: var(--raggio-bordo);
+      padding: 2rem;
+      box-shadow: var(--ombra-card);
+      border: 1px solid var(--grigio-bordo);
+      border-top: 3px solid var(--blu-primario);
+      transition: transform var(--transizione);
+    }
+
+    .ambiente-card:hover { transform: translateY(-3px); }
+
+    .ambiente-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .ambiente-card-titolo {
+      font-family: var(--font-titoli);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--blu-primario);
+    }
+
+    .ambiente-dato {
+      font-family: var(--font-titoli);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--blu-primario);
+    }
+
+    .ambiente-card-testo { font-size: 0.9rem; color: var(--grigio-medio); line-height: 1.7; }
+
+    /* Sotto-griglia con dati secondari */
+    .sotto-dati { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+
+    .sotto-dato {
+      background: var(--grigio-chiaro);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .sotto-dato-numero { font-family: var(--font-titoli); font-size: 1.5rem; font-weight: 700; color: var(--blu-primario); }
+    .sotto-dato-label { font-size: 0.78rem; color: var(--grigio-medio); margin-top: 0.25rem; }
+
+    /* Sezione CLIMA */
+    .clima-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+      align-items: center;
+    }
+
+    .clima-testo { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.8; }
+    .clima-testo p { margin-bottom: 1.25rem; }
+
+    /* Contenitore del grafico a barre */
+    .grafico-barre {
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--raggio-bordo);
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .grafico-titolo { font-family: var(--font-titoli); font-size: 1.1rem; font-weight: 600; color: var(--bianco); margin-bottom: 0.25rem; }
+    .grafico-sottotitolo { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; }
+
+    .barre-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 180px;
+      padding-bottom: 1.75rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .barra-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    /* Barra del grafico */
+    .barra {
+      width: 100%;
+      max-width: 28px;
+      background: var(--oro);
+      border-radius: 3px 3px 0 0;
+      transition: background var(--transizione);
+      animation: growUp 1s ease forwards;
+      transform-origin: bottom;
+    }
+
+    @keyframes growUp {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+
+    .barra:hover { background: var(--bianco); }
+
+    .barra-label {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.4rem;
+      transform: rotate(-45deg);
+      white-space: nowrap;
+    }
+
+    /* Sezione impatto sociale */
+    .sociale-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .sociale-testo { font-size: 0.95rem; color: var(--grigio-medio); line-height: 1.8; }
+    .sociale-testo p { margin-bottom: 1.25rem; }
+
+    .donut-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    .donut-card {
+      background: var(--bianco);
+      border-radius: var(--raggio-bordo);
+      padding: 1.5rem;
+      box-shadow: var(--ombra-card);
+      border: 1px solid var(--grigio-bordo);
+      text-align: center;
+    }
+
+    .donut-titolo { font-size: 0.8rem; font-weight: 500; color: var(--grigio-medio); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+    
+    .donut {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      position: relative;
+    }
+
+    .donut::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--bianco);
+    }
+
+    .donut-genere { background: conic-gradient(var(--blu-primario) 0% 64%, var(--oro) 64% 100%); }
+    .donut-nazionalita { background: conic-gradient(var(--blu-primario) 0% 82%, var(--oro) 82% 100%); }
+
+    .donut-legenda { display: flex; justify-content: center; gap: 1rem; font-size: 0.78rem; color: var(--grigio-medio); }
+    .legenda-item { display: flex; align-items: center; gap: 0.35rem; }
+    .legenda-colore { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* Sezione CERTIFICAZIONI */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .cert-card {
+      background: var(--bianco);
+      border-radius: var(--raggio-bordo);
+      padding: 2rem;
+      box-shadow: var(--ombra-card);
+      border: 1px solid var(--grigio-bordo);
+      margin-bottom: 1.5rem;
+    }
+
+    .cert-nome { font-family: var(--font-titoli); font-size: 1.3rem; font-weight: 700; color: var(--blu-primario); margin-bottom: 0.5rem; }
+    .cert-testo { font-size: 0.9rem; color: var(--grigio-medio); line-height: 1.7; }
+
+    /* Tabella obiettivi */
+    .obiettivi-tabella { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+
+    .obiettivi-tabella th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--grigio-medio);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--blu-primario);
+      font-weight: 500;
+    }
+
+    .obiettivi-tabella td {
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--grigio-bordo);
+    }
+
+    .obiettivi-tabella tr:nth-child(even) { background: var(--grigio-chiaro); }
+    .obiettivi-tabella .scadenza { font-weight: 500; color: var(--blu-primario); white-space: nowrap; }
+
+    /* Sezione DOWNLOAD */
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .download-testo { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.8; }
+
+    /* Bottone download */
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      border: 2px solid var(--oro);
+      color: var(--oro);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 6px;
+      transition: all var(--transizione);
+      margin-top: 1.5rem;
+    }
+
+    .btn-download:hover { background: var(--oro); color: var(--blu-scuro); }
+    .btn-download svg { width: 20px; height: 20px; transition: transform var(--transizione); }
+    .btn-download:hover svg { transform: translateY(3px); }
+
+    /* Card contatti su sfondo blu */
+    .contatti-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: var(--raggio-bordo);
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .contatti-card h3 { font-family: var(--font-titoli); font-size: 1.3rem; font-weight: 600; color: var(--bianco); margin-bottom: 1.25rem; }
+    .contatto-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem; color: rgba(255,255,255,0.75); font-size: 0.9rem; }
+    .contatto-item a { color: var(--oro); text-decoration: none; transition: color var(--transizione); }
+    .contatto-item a:hover { color: var(--bianco); }
+    .contatto-icona { width: 18px; height: 18px; flex-shrink: 0; fill: var(--oro); }
+
+    /* Link social */
+    .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all var(--transizione);
+    }
+
+    .social-link:hover { background: var(--oro); border-color: var(--oro); color: var(--blu-scuro); }
+
+    /* footer */
+    .footer {
+      background: #091e36;
+      padding: 2rem;
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.8rem;
+    }
+
+    .footer a { color: var(--oro); text-decoration: none; }
+    .footer-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.15); margin: 1rem auto; }
+
+    /* Scrool con fade */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visibile {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Griglie inline sezione certificazioni — gestite con classi per poter fare override mobile */
+    .cert-row-top { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .cert-row-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    /* Gestione responsività */
+    @media (max-width: 1024px) {
+      .chi-siamo-grid, .vini-grid, .clima-grid,
+      .sociale-grid, .cert-grid, .download-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .hero-title { font-size: 3rem; }
+      .sezione-titolo { font-size: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .navbar-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        background: rgba(14,58,110,0.97);
+        flex-direction: column;
+        padding: 1rem 2rem 1.5rem;
+        gap: 1rem;
+      }
+      .navbar-links.attivo { display: flex; }
+      .hero { min-height: 500px; }
+      .hero-title { font-size: 2.25rem; }
+      .hero-description { font-size: 1rem; }
+      .sezione { padding: 3.5rem 1.25rem; }
+      .sezione-titolo { font-size: 1.75rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      /* card statistiche: larghezza adattabile senza overflow */
+      .stat-card { min-width: 0; width: 100%; }
+      .vini-gallery { grid-template-rows: 160px 120px; }
+      .donut-grid { grid-template-columns: 1fr; }
+      .barre-container { height: 140px; }
+      .barra-label { font-size: 0.5rem; }
+      /* forzo colonna singola anche su mobile per griglie a 2 colonne */
+      .chi-siamo-grid, .vini-grid, .clima-grid,
+      .sociale-grid, .cert-grid, .download-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      /* grafico clima: riduco altezza su mobile per evitare overflow */
+      .grafico-barre { overflow-x: auto; }
+      /* sezione certificazioni: colonna singola su mobile */
+      .cert-row-top, .cert-row-bottom { grid-template-columns: 1fr; }
+      /* icone valori: larghezza fissa non deve causare overflow */
+      .valore-icona { flex-shrink: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.85rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .sotto-dati { grid-template-columns: 1fr; }
+      .stat-numero { font-size: 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- barra di navigazione in alto a dx ed il titolo a sx -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="#hero" class="navbar-logo">Castello di Uviglie</a>
+	 <!-- bottone per la visualizzazione da mobile --> 
+      <button class="hamburger" aria-label="Apri menu" onclick="this.nextElementSibling.classList.toggle('attivo')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="navbar-links">
+        <li><a href="#chi-siamo">Chi siamo</a></li>
+        <li><a href="#vini">I vini</a></li>
+        <li><a href="#ambiente">Ambiente</a></li>
+        <li><a href="#clima">Clima</a></li>
+        <li><a href="#sociale">Sociale</a></li>
+        <li><a href="#certificazioni">Certificazioni</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- sezione 1: HERO -->
+  
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <p class="hero-subtitle">Monferrato · Piemonte · Dal 1491</p>
+      <h1 class="hero-title">Castello di Uviglie</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-description">
+        Bilancio di Sostenibilità 2024 — L'impegno quotidiano di una cantina 
+        storica per un futuro sostenibile tra le colline del Monferrato.
+      </p>
+      <a href="#chi-siamo" class="hero-cta">Scopri il report</a>
+    </div>
+  </section>
+
+  <!-- sezione 2: CHI SIAMO -->
+  
+  <section class="sezione" id="chi-siamo">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">La nostra identità</p>
+        <h2 class="sezione-titolo">Chi siamo</h2>
+        <div class="sezione-linea"></div>
+      </div>
+      <div class="stats-grid fade-in">
+        <div class="stat-card">
+          <div class="stat-numero">1491</div>
+          <div class="stat-etichetta">Inizio tradizione viticola</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-numero">45</div>
+          <div class="stat-etichetta">Ettari di vigneti</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-numero">10</div>
+          <div class="stat-etichetta">Varietà autoctone</div>
+        </div>
+      </div>
+
+      <div class="chi-siamo-grid fade-in">
+        <div class="chi-siamo-testo">
+          <p>
+            La vita del Castello di Uviglie è il racconto autentico della tenacia 
+            richiesta per vivere e lavorare tra le colline dell'Alessandrino. È la 
+            storia della <strong>famiglia Bonzano</strong> che porta avanti con passione 
+            una tradizione vitivinicola del Monferrato iniziata nel 1491.
+          </p>
+          <p>
+            Con 45 ettari di vigneti coltivati tra i 300 e i 500 metri di altitudine, 
+            l'azienda produce vini di alta qualità legati ad un uso consapevole delle 
+            risorse naturali e ad un profondo rispetto per il territorio.
+          </p>
+          <p>
+            La <strong>missione</strong> è dare l'opportunità di conoscere intimamente 
+            la Natura attraverso i suoi prodotti, il lavoro sapiente dell'uomo, 
+            il buon vivere in un ambiente integro e la passione per nuove sfide.
+          </p>
+        </div>
+        <div>
+          <div class="valore-item">
+            <div class="valore-icona">&#127815;</div> <!-- icona uva -->
+            <div>
+              <div class="valore-nome">Passione per il territorio</div>
+              <div class="valore-desc">Valorizzazione delle eccellenze enologiche e turistiche del Piemonte.</div>
+            </div>
+          </div>
+          <div class="valore-item">
+            <div class="valore-icona">&#9733;</div> <!-- icona stella -->
+            <div>
+              <div class="valore-nome">Qualità</div>
+              <div class="valore-desc">Uve selezionate del Monferrato, vinificate nel rispetto della tradizione.</div>
+            </div>
+          </div>
+          <div class="valore-item">
+            <div class="valore-icona">&#9881;</div> <!-- icona ingranaggio -->
+            <div>
+              <div class="valore-nome">Innovazione</div>
+              <div class="valore-desc">Investimento costante nella modernizzazione dei processi produttivi.</div>
+            </div>
+          </div>
+          <div class="valore-item">
+            <div class="valore-icona">&#128188;</div> <!-- icona valigetta -->
+            <div>
+              <div class="valore-nome">Professionalità</div>
+              <div class="valore-desc">Team di professionisti qualificati con il supporto di realtà esterne per l'efficientamento della produzione.</div>
+            </div>
+          </div>
+          <div class="valore-item">
+            <div class="valore-icona">&#127793;</div> <!-- icona piantina -->
+            <div>
+              <div class="valore-nome">Sostenibilità</div>
+              <div class="valore-desc">Tecniche agricole sostenibili e soluzioni eco-friendly in cantina.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sezione 3: vini -->
+  
+  <section class="sezione sezione-grigia" id="vini">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">Produzione e territorio</p>
+        <h2 class="sezione-titolo">I nostri vini e come lavoriamo</h2>
+        <div class="sezione-linea"></div>
+      </div>
+      <div class="vini-grid fade-in">
+        <div class="vini-gallery">
+          <div class="img-grande">
+			<img src="img/cantina3.jpg" alt="Cantina" class="img-placeholder">
+		  </div>
+          <div class="img-piccola">
+			<img src="img/vendemmia1.png" alt="Cantina" class="img-placeholder">
+		  </div>
+          <div class="img-piccola">
+		  <img src="img/vigneti1.jpg" alt="Cantina" class="img-placeholder">
+		  </div>
+        </div>
+        <div class="vini-content">
+          <p>
+            La cantina è progettata per preservare tutti gli aromi delle uve. 
+            La fermentazione avviene in <strong>vasche di acciaio</strong>, 
+            l'affinamento in acciaio o in legno a seconda della tipologia di vino.
+          </p>
+          <p>
+            L'invecchiamento avviene in una <strong>cantina sotterranea</strong>, 
+            protetta dalla luce, con temperatura controllata per preservare 
+            qualità e gusto nel tempo.
+          </p>
+          <p>
+            La scelta di certificare l'intera filiera <strong>S.Q.P.N.I. ed EQUALITAS</strong> 
+            è una dimostrazione concreta della trasparenza e dell'impegno dell'azienda 
+            nei confronti dei propri clienti e del territorio.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sezione 4: sostenibilità ambientale -->
+  
+  <section class="sezione" id="ambiente">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">Ambiente</p>
+        <h2 class="sezione-titolo">Sostenibilità ambientale</h2>
+        <div class="sezione-linea"></div>
+        <p class="sezione-intro">
+          L'azienda si impegna a ridurre l'impatto ambientale delle proprie attività 
+          con tecniche agricole sostenibili e soluzioni eco-friendly in cantina.
+        </p>
+      </div>
+      <div class="ambiente-cards fade-in">
+        <div class="ambiente-card">
+          <div class="ambiente-card-header">
+            <div class="ambiente-card-titolo">Prelievo idrico</div>
+            <span class="badge badge-blu">Zero impatto</span>
+          </div>
+          <div class="ambiente-dato" style="margin-bottom:0.75rem;">0 m³</div>
+          <p class="ambiente-card-testo">
+            Prelievo idrico 2023 per le attività in cantina. L'acqua proviene 
+            interamente da falda, con zero impatto sull'ambiente. È attivo un 
+            <strong>progetto di raccolta delle acque superficiali</strong> per uso agricolo.
+          </p>
+        </div>
+        <!-- Consumo Energetico -->
+        <div class="ambiente-card">
+          <div class="ambiente-card-header">
+            <div class="ambiente-card-titolo">Consumo energetico</div>
+            <span class="badge badge-oro">Monitoraggio attivo</span>
+          </div>
+          <div class="ambiente-dato" style="margin-bottom:0.75rem;">60.802 kWh</div>
+          <p class="ambiente-card-testo">
+            Consumo totale di energia elettrica 2023. Monitoraggio costante di 
+            illuminazione, refrigerazione e vinificazione.
+          </p>
+          <div class="sotto-dati">
+            <div class="sotto-dato">
+              <div class="sotto-dato-numero">5.222</div>
+              <div class="sotto-dato-label">smc Gas Metano</div>
+            </div>
+            <div class="sotto-dato">
+              <div class="sotto-dato-numero">6.000</div>
+              <div class="sotto-dato-label">litri Gasolio</div>
+            </div>
+          </div>
+        </div>
+        <div class="ambiente-card">
+          <div class="ambiente-card-header">
+            <div class="ambiente-card-titolo">Pratiche sostenibili</div>
+            <span class="badge badge-verde">SQNPI</span>
+          </div>
+          <p class="ambiente-card-testo" style="margin-top:1.5rem;">
+            <strong>Lotta integrata:</strong> nessun agente chimico, compost organico, 
+            sovescio con legumi e trifoglio per proteggere il suolo.
+          </p>
+          <p class="ambiente-card-testo" style="margin-top:0.75rem;">
+            <strong>Biodiversità:</strong> cura dei boschi, riforestazione e 
+            agricoltura rigenerativa.
+          </p>
+          <p class="ambiente-card-testo" style="margin-top:0.75rem;">
+            <strong>Economia circolare:</strong> bottiglie in vetro leggero 
+            (27% → obiettivo 60% entro 2025), scatole auto-montanti.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sezione 5: CAMBIAMENTO CLIMATICO -->
+  
+  <section class="sezione sezione-blu" id="clima">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">Il clima e la vite</p>
+        <h2 class="sezione-titolo">Cambiamento climatico in Piemonte</h2>
+        <div class="sezione-linea"></div>
+      </div>
+      <div class="clima-grid fade-in">
+        <div class="clima-testo">
+          <p>
+            Il report documenta come il cambiamento climatico stia influenzando 
+            la viticoltura nella regione del Monferrato.
+          </p>
+          <p>
+            Le <strong style="color:var(--oro);">somme termiche</strong> — indicatore 
+            del calore accumulato durante la stagione vegetativa — mostrano un 
+            <strong style="color:var(--oro);">trend in crescita</strong> nel lungo periodo, 
+            con oscillazioni significative tra le annate.
+          </p>
+          <p>
+            Anche le <strong style="color:var(--oro);">temperature medie mensili</strong> 
+            confermano questo andamento: nelle annate più calde le temperature 
+            superano la media storica da maggio a ottobre, allungando la stagione 
+            vegetativa e anticipando la maturazione delle uve.
+          </p>
+
+        </div>
+        <!-- grafico a barre -->
+        <div class="grafico-barre">
+          <div class="grafico-titolo">Somme termiche annuali</div>
+          <div class="grafico-sottotitolo">Fonte: RAM Regione Piemonte · °C/gg</div>
+          <div style="display:flex; gap:0.75rem; margin-top:1rem;">
+            <div style="display:flex; flex-direction:column; justify-content:space-between; height:300px; padding-bottom:1.75rem; text-align:right; flex-shrink:0;">
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">3000</span>
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">2500</span>
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">2000</span>
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">1500</span>
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">1000</span>
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">500</span>
+              <span style="font-size:0.58rem; color:rgba(255,255,255,0.45);">0</span>
+            </div>
+
+            <!-- area grafico con linee guida e barre -->
+            <div style="flex:1; position:relative; height:300px;">
+              <div style="position:absolute; inset:0; pointer-events:none;">
+                <div style="position:absolute; bottom:41px;  left:0; right:0; border-top:1px dashed rgba(255,255,255,0.12);"></div>
+                <div style="position:absolute; bottom:82px;  left:0; right:0; border-top:1px dashed rgba(255,255,255,0.12);"></div>
+                <div style="position:absolute; bottom:123px; left:0; right:0; border-top:1px dashed rgba(255,255,255,0.2);"></div>
+                <div style="position:absolute; bottom:164px; left:0; right:0; border-top:1px dashed rgba(255,255,255,0.12);"></div>
+                <div style="position:absolute; bottom:205px; left:0; right:0; border-top:1px dashed rgba(255,255,255,0.12);"></div>
+                <div style="position:absolute; bottom:246px; left:0; right:0; border-top:1px dashed rgba(255,255,255,0.12);"></div>
+              </div>
+              <div class="barre-container" style="height:300px;">
+                <div class="barra-wrapper"><div class="barra" style="height:154px" title="2009: ~1700°C/gg"></div><span class="barra-label">09</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:163px" title="2010: ~1800°C/gg"></div><span class="barra-label">10</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:190px" title="2011: ~2100°C/gg"></div><span class="barra-label">11</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:190px" title="2012: ~2100°C/gg"></div><span class="barra-label">12</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:181px" title="2013: ~2000°C/gg"></div><span class="barra-label">13</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:181px" title="2014: ~2000°C/gg"></div><span class="barra-label">14</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:209px" title="2015: ~2300°C/gg"></div><span class="barra-label">15</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:186px" title="2016: ~2050°C/gg"></div><span class="barra-label">16</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:218px" title="2017: ~2400°C/gg"></div><span class="barra-label">17</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:181px" title="2018: ~2000°C/gg"></div><span class="barra-label">18</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:163px" title="2019: ~1800°C/gg"></div><span class="barra-label">19</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:159px" title="2020: 1748°C/gg"></div><span class="barra-label">20</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:154px" title="2021: ~1700°C/gg"></div><span class="barra-label">21</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:206px" title="2022: 2266°C/gg"></div><span class="barra-label">22</span></div>
+                <div class="barra-wrapper"><div class="barra" style="height:186px" title="2023: ~2050°C/gg"></div><span class="barra-label">23</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sezione 6: impatto sociale -->
+  
+  <section class="sezione" id="sociale">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">Pilastro sociale</p>
+        <h2 class="sezione-titolo">Impatto sociale</h2>
+        <div class="sezione-linea"></div>
+      </div>
+      <div class="stats-grid fade-in" style="margin-bottom:3rem;">
+        <div class="stat-card"><div class="stat-numero">11</div><div class="stat-etichetta">Dipendenti</div></div>
+        <div class="stat-card"><div class="stat-numero">35</div><div class="stat-etichetta">Età media (anni)</div></div>
+        <div class="stat-card"><div class="stat-numero">0%</div><div class="stat-etichetta">Tasso di rinuncia</div></div>
+      </div>
+      <div class="sociale-grid fade-in">
+        <div class="donut-grid">
+		<!-- grafico a ciambella -->
+          <div class="donut-card">
+            <div class="donut-titolo">Genere</div>
+            <div class="donut donut-genere"></div>
+            <div class="donut-legenda">
+              <div class="legenda-item"><div class="legenda-colore" style="background:var(--blu-primario)"></div>Maschi 64%</div>
+              <div class="legenda-item"><div class="legenda-colore" style="background:var(--oro)"></div>Femmine 36%</div>
+            </div>
+          </div>
+		  <!-- grafico a ciambella -->
+          <div class="donut-card">
+            <div class="donut-titolo">Nazionalità</div>
+            <div class="donut donut-nazionalita"></div>
+            <div class="donut-legenda">
+              <div class="legenda-item"><div class="legenda-colore" style="background:var(--blu-primario)"></div>Italiani 82%</div>
+              <div class="legenda-item"><div class="legenda-colore" style="background:var(--oro)"></div>Esteri 18%</div>
+            </div>
+          </div>
+        </div>
+        <div class="sociale-testo">
+          <p>
+            Il benessere dei dipendenti è un tema imprescindibile. L'azienda offre 
+            <strong>formazione e sviluppo professionale</strong>, promuovendo un ambiente 
+            di lavoro inclusivo basato sull'uguaglianza.
+          </p>
+          <p>
+            <strong>Parità, equità e inclusione</strong> guidano il lavoro quotidiano. 
+            La sicurezza è priorità assoluta con valutazioni periodiche dei rischi 
+            e misure preventive.
+          </p>
+          <p>
+            L'azienda sostiene la <strong>comunità locale</strong> con eventi di 
+            formazione in campo viticolo e supporto a organizzazioni non profit.
+          </p>
+          <p>
+            Il <strong>tasso di rinuncia al lavoro è 0%</strong>, a conferma di un 
+            ambiente di lavoro sano e di una squadra stabile e motivata.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sezione 7: certificazioni -->
+  <section class="sezione sezione-grigia" id="certificazioni">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">Traguardi e futuro</p>
+        <h2 class="sezione-titolo">Certificazioni e obiettivi</h2>
+        <div class="sezione-linea"></div>
+      </div>
+      <div class="fade-in">
+        <div class="cert-row-top">
+          <div class="cert-card">
+            <div style="margin-bottom:0.75rem;"><span class="badge badge-blu">Certificazione</span></div>
+            <div class="cert-nome">S.Q.N.P.I.</div>
+            <p class="cert-testo">
+              Certificata da Valoritalia. Prevede limiti di solforosa totale, produzione senza 
+              sostanze chimiche di sintesi e senza OGM. Vinificazione con soli prodotti autorizzati.
+            </p>
+          </div>
+          <div class="cert-card">
+            <div style="margin-bottom:0.75rem;"><span class="badge badge-verde">Certificazione 2023</span></div>
+            <div class="cert-nome">EQUALITAS</div>
+            <p class="cert-testo">
+              Sostenibilità del settore vitivinicolo basata sui tre pilastri: 
+              <strong>sociale, ambientale ed economico</strong>. Modello italiano 
+              di qualità sostenibile riconosciuto a livello mondiale.
+            </p>
+          </div>
+        </div>
+        <div class="cert-row-bottom">
+          <!-- obiettivi aziendali -->
+          <div>
+            <h3 style="font-family:var(--font-titoli);font-size:1.3rem;font-weight:600;color:var(--blu-primario);margin-bottom:1rem;">
+              Obiettivi 2024–2026
+            </h3>
+            <table class="obiettivi-tabella">
+              <thead>
+                <tr><th>Obiettivo</th><th>Descrizione</th><th>Scadenza</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Consumo idrico</strong></td><td>Riduzione del 20% con saving idrico</td><td class="scadenza">2025</td></tr>
+                <tr><td><strong>Packaging</strong></td><td>Studi materiali ecosostenibili</td><td class="scadenza">2025</td></tr>
+                <tr><td><strong>Carbon Foot Print</strong></td><td>Calcolo dell'indice d'impatto</td><td class="scadenza">2026</td></tr>
+                <tr><td><strong>Water Foot Print</strong></td><td>Calcolo impronta idrica</td><td class="scadenza">2025</td></tr>
+                <tr><td><strong>Biodiversità</strong></td><td>Calcolo indice di biodiversità</td><td class="scadenza">2024</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- obiettivi operativi personale -->
+          <div>
+            <h3 style="font-family:var(--font-titoli);font-size:1.3rem;font-weight:600;color:var(--blu-primario);margin-bottom:1rem;">
+              Obiettivi operativi del personale
+            </h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1rem;border-bottom:2px solid var(--blu-primario);margin-bottom:0;">
+              <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--grigio-medio);font-weight:500;">Obiettivo</span>
+              <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--grigio-medio);font-weight:500;">Status</span>
+            </div>
+            <div class="card" style="padding:1.25rem; border-top:none; border-radius: 0 0 var(--raggio-bordo) var(--raggio-bordo);">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--grigio-bordo);">
+                <span style="font-size:0.88rem;">Mantenimento certificazione Equalitas</span>
+                <span class="badge badge-verde">2024</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--grigio-bordo);">
+                <span style="font-size:0.88rem;">Riduzione consumi energetici -10%</span>
+                <span class="badge badge-oro">In corso</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--grigio-bordo);">
+                <span style="font-size:0.88rem;">Riduzione consumo di carta</span>
+                <span class="badge badge-oro">In corso</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;">
+                <span style="font-size:0.88rem;">Riduzione consumo di plastica</span>
+                <span class="badge badge-oro">In corso</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- sezione 8: download report  -->
+  <section class="sezione sezione-blu" id="download">
+    <div class="container">
+      <div class="fade-in">
+        <p class="sezione-etichetta">Scarica e connettiti</p>
+        <h2 class="sezione-titolo">Scarica il report completo</h2>
+        <div class="sezione-linea"></div>
+      </div>
+      <div class="download-grid fade-in">
+        <div>
+          <p class="download-testo">
+            Il Bilancio di Sostenibilità 2024 è disponibile per il download in PDF. 
+            Include tutti i dati ambientali, sociali ed economici, le certificazioni 
+            e gli obiettivi futuri dell'azienda.
+          </p>
+          <a href="https://www.castellodiuviglie.com/images/sostenibilità/cdu-bilancio-sostenibilità-2024.pdf" 
+             class="btn-download" target="_blank" rel="noopener noreferrer"> <!-- nuova pagina senza ref -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg> <!-- utilizzo immagine vettoriale download -->
+            Scarica il PDF
+          </a>
+          <p style="margin-top:1.5rem;">
+            <a href="https://www.castellodiuviglie.com" target="_blank" rel="noopener noreferrer" 
+               style="color:var(--oro);text-decoration:none;font-size:0.9rem;border-bottom:1px solid rgba(200,164,90,0.3);">
+              Visita il sito ufficiale →
+            </a>
+          </p>
+        </div>
+        <div class="contatti-card">
+          <h3>Contatti</h3>
+          <div class="contatto-item">
+            <svg class="contatto-icona" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Loc. Castello di Uviglie 73, Rosignano Monferrato (AL)
+          </div>
+          <div class="contatto-item">
+            <svg class="contatto-icona" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+390142488132">+39 0142 488132</a>
+          </div>
+          <div class="contatto-item">
+            <svg class="contatto-icona" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+            <a href="https://wa.me/393371250397">+39 337 125 0397</a>
+          </div>
+          <div class="contatto-item">
+            <svg class="contatto-icona" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:vini@castellodiuviglie.com">vini@castellodiuviglie.com</a>
+          </div>
+          <div class="social-links">
+            <a href="https://www.instagram.com/castellodiuviglie_winery/" class="social-link" target="_blank" rel="noopener noreferrer" title="Instagram">IG</a>
+            <a href="https://www.facebook.com/castelloduviglie/" class="social-link" target="_blank" rel="noopener noreferrer" title="Facebook">FB</a>
+            <a href="https://www.linkedin.com/company/castelloduviglie/" class="social-link" target="_blank" rel="noopener noreferrer" title="LinkedIn">LI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="footer">
+    <p>Società Agricola Castello di Uviglie SRL — P.IVA 01911850061</p>
+    <div class="footer-divider"></div>
+    <p>
+      Progetto di Matteo Lasalvia — Analisi del Bilancio di Sostenibilità 2024<br>
+      <a href="https://www.castellodiuviglie.com" target="_blank" rel="noopener noreferrer">www.castellodiuviglie.com</a>
+    </p>
+  </footer>
+
+  <!-- gestione scroll con IntersectionObserver  -->
+  <script>
+    // seleziona gli elementi da animare con la classe .fade-in
+    var elementiAnimati = document.querySelectorAll('.fade-in');
+    
+    // crea l'observer 
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {	
+        if (entry.isIntersecting) {//rende attiva la classe "visibile" per ogni elemento intercettato
+          entry.target.classList.add('visibile');
+          observer.unobserve(entry.target); // smette di osservare, l'effetto viene proposto solo al primo passaggio in quella sezione
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }); //15% e 50pixel dal basso
+
+    // ogni elemento viene "affidato" all'observer,serve ad effettuare all'associazione
+    elementiAnimati.forEach(function(el) { observer.observe(el); });
+
+    // chiude il menu hamburger quando si clicca su un link di navigazione da mobile
+    var linkNavbar = document.querySelectorAll('.navbar-links a');
+    var menuNavbar = document.querySelector('.navbar-links');
+    linkNavbar.forEach(function(link) {
+      link.addEventListener('click', function() {
+        menuNavbar.classList.remove('attivo');
+      });
+    });
+  </script>
+</body>
+</html>
